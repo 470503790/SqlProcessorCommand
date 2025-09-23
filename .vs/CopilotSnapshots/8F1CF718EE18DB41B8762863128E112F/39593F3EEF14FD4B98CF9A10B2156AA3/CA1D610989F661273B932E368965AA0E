@@ -1,4 +1,4 @@
-# SqlProcessorCommand
+﻿# SqlProcessorCommand
 
 > 将原始 SQL Server 脚本转换为“幂等”脚本：可多次重复执行而不会因为对象已存在/不存在等原因失败，降低发布脚本的风险。
 
