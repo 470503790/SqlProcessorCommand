@@ -137,6 +137,30 @@ namespace SqlProcessorCommand
             p.Add(new DropConstraintTransform());
             p.Add(new DropDefaultConstraintSmartTransform());
             p.Add(new DropIndexTransform());
+
+            // 架构管理
+            p.Add(new CreateSchemaTransform());
+            p.Add(new DropSchemaTransform());
+
+            // 用户定义类型
+            p.Add(new CreateUserDefinedTypeTransform());
+            p.Add(new DropUserDefinedTypeTransform());
+
+            // 同义词
+            p.Add(new CreateSynonymTransform());
+            p.Add(new DropSynonymTransform());
+
+            // 序列（SQL 2012+）
+            p.Add(new CreateSequenceTransform());
+            p.Add(new AlterSequenceTransform());
+            p.Add(new DropSequenceTransform());
+
+            // 安全对象
+            p.Add(new CreateRoleTransform());
+            p.Add(new DropRoleTransform());
+            p.Add(new CreateUserTransform());
+            p.Add(new DropUserTransform());
+
             p.Add(new AlterColumnTransform());                 // 最后处理 ALTER COLUMN 类
 
             // 清理项
