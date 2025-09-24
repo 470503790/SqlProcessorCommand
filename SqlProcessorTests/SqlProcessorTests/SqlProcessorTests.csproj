@@ -52,9 +52,47 @@
   <ItemGroup>
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DropTableTransformTests.cs" />
+    <Compile Include="CreateOrAlterProcedureTransformTests.cs" />
+    <Compile Include="CreateSequenceTransformTests.cs" />
+    <Compile Include="DropSequenceTransformTests.cs" />
+    <Compile Include="CreateUserDefinedTypeTransformTests.cs" />
+    <Compile Include="CreateRoleTransformTests.cs" />
+    <Compile Include="ViewCreateAlterWrapper2014Tests.cs" />
+    <Compile Include="CreateTableTransformTests.cs" />
+    <Compile Include="AddColumnTransformTests.cs" />
+    <Compile Include="AlterColumnTransformTests.cs" />
+    <Compile Include="CreateIndexTransformTests.cs" />
+    <Compile Include="DropUserDefinedTypeTransformTests.cs" />
+    <Compile Include="CreateSchemaTransformTests.cs" />
+    <Compile Include="DropConstraintTransformTests.cs" />
+    <Compile Include="CreateSynonymTransformTests.cs" />
+    <Compile Include="DropIndexTransformTests.cs" />
+    <Compile Include="CreateUserTransformTests.cs" />
+    <Compile Include="ProcCreateAlterWrapper2014Tests.cs" />
+    <Compile Include="AddConstraintTransformTests.cs" />
+    <Compile Include="DropColumnTransformTests.cs" />
+    <Compile Include="AlterSequenceTransformTests.cs" />
+    <Compile Include="CreateOrAlterTriggerTransformTests.cs" />
+    <Compile Include="FunctionCreateAlterWrapper2014Tests.cs" />
+    <Compile Include="DropRoleTransformTests.cs" />
+    <Compile Include="CreateOrAlterViewTransformTests.cs" />
+    <Compile Include="TriggerCreateAlterWrapper2014Tests.cs" />
+    <Compile Include="DropSynonymTransformTests.cs" />
+    <Compile Include="DropUserTransformTests.cs" />
+    <Compile Include="DropSchemaTransformTests.cs" />
+    <Compile Include="AddDefaultConstraintTransformTests.cs" />
+    <Compile Include="DropColumnToEmptyTransformTests.cs" />
+    <Compile Include="ColumnPrefixDiscardTransformTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\SqlProcessorCommand.csproj">
+      <Project>{E8F65C39-0F9B-4F9A-8E47-6D7B8F2F0B8E}</Project>
+      <Name>SqlProcessorCommand</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
