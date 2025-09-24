@@ -61,6 +61,16 @@
     <Compile Include="ViewCreateAlterWrapper2014Tests.cs" />
     <Compile Include="CreateTableTransformTests.cs" />
     <Compile Include="AddColumnTransformTests.cs" />
+    <Compile Include="AlterColumnTransformTests.cs" />
+    <Compile Include="CreateIndexTransformTests.cs" />
+    <Compile Include="DropUserDefinedTypeTransformTests.cs" />
+    <Compile Include="CreateSchemaTransformTests.cs" />
+    <Compile Include="DropConstraintTransformTests.cs" />
+    <Compile Include="CreateSynonymTransformTests.cs" />
+    <Compile Include="DropIndexTransformTests.cs" />
+    <Compile Include="CreateUserTransformTests.cs" />
+    <Compile Include="ProcCreateAlterWrapper2014Tests.cs" />
+    <Compile Include="AddConstraintTransformTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
