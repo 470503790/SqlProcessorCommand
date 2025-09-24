@@ -366,7 +366,7 @@ File.WriteAllText("upgrade.idempotent.sql", outputSql);
 - `CREATE CERTIFICATE` / `CREATE KEY` 加密对象
 
 ## License
-尚未声明。如需开源分发，请补充 LICENSE 文件并在此处更新说明。
+本项目采用 MIT 许可证。详见 [LICENSE](LICENSE) 文件。
 
 ---
 欢迎提交 Issue / PR 以补充更多幂等规则或改进正则匹配。
