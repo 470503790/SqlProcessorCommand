@@ -5,6 +5,30 @@
 ## 背景
 常规升级脚本里包含 `CREATE TABLE / CREATE PROC / DROP COLUMN / DROP TABLE / ALTER COLUMN` 等语句，若直接重复执行容易报错或造成危险行为。本工具按 `GO` 分批读取输入脚本，针对每一批尝试匹配一条规则（Transform），将其改写为“存在才创建/删除”或“条件包装”，或直接丢弃高风险语句，使整体脚本具备幂等能力。
 
+## 使用场景
+
+### 典型应用场景
+1. **数据库版本升级**: 将开发环境的升级脚本转换为可重复执行的生产脚本
+2. **多环境部署**: 确保同一脚本可以在测试、预生产、生产环境重复执行
+3. **CI/CD 管道**: 自动化部署流程中的数据库变更管理
+4. **应急修复**: 紧急补丁的安全部署，避免因对象已存在而失败
+5. **数据库迁移**: 跨服务器的数据库结构同步
+
+### 推荐工作流程
+```bash
+# 1. 从原始升级脚本生成幂等版本
+SqlProcessorCommand -i upgrade_v1.2.sql -n safe
+
+# 2. 审阅生成的脚本确保符合预期
+notepad upgrade_v1.2.safe.sql
+
+# 3. 在测试环境验证
+sqlcmd -S test-server -d MyDatabase -i upgrade_v1.2.safe.sql
+
+# 4. 生产环境部署（可重复执行）
+sqlcmd -S prod-server -d MyDatabase -i upgrade_v1.2.safe.sql
+```
+
 ## 命令行使用
 ```
 SqlProcessorCommand --input <input.sql> [--output <out.sql>] [--name <tag>] [--encoding <enc>]
@@ -98,8 +122,107 @@ END
 
 ### 5. ADD COLUMN / ADD CONSTRAINT / 默认约束
 类似地被改写为“列/约束不存在时才添加”。
+### 6. CREATE SCHEMA
+输入：
+```sql
+CREATE SCHEMA [TestSchema]
+```
+输出：
+```sql
+IF SCHEMA_ID(N'[TestSchema]') IS NULL
+BEGIN
+    CREATE SCHEMA [TestSchema]
+END
+```
 
-## 已内置的 Transform 规则
+### 7. CREATE USER-DEFINED TYPE
+输入：
+```sql
+CREATE TYPE [dbo].[MyTableType] AS TABLE (
+    ID INT NOT NULL,
+    Name NVARCHAR(50)
+)
+```
+输出：
+```sql
+IF TYPE_ID(N'[dbo].[MyTableType]') IS NULL
+BEGIN
+    CREATE TYPE [dbo].[MyTableType] AS TABLE (
+        ID INT NOT NULL,
+        Name NVARCHAR(50)
+    )
+END
+```
+
+### 8. CREATE SYNONYM
+输入：
+```sql
+CREATE SYNONYM [dbo].[MyTableSyn] FOR [dbo].[MyTable]
+```
+输出：
+```sql
+IF OBJECT_ID(N'[dbo].[MyTableSyn]', N'SN') IS NULL
+BEGIN
+    CREATE SYNONYM [dbo].[MyTableSyn] FOR [dbo].[MyTable]
+END
+```
+
+### 9. CREATE SEQUENCE (SQL Server 2012+)
+输入：
+```sql
+CREATE SEQUENCE [dbo].[MySequence] START WITH 1 INCREMENT BY 1
+```
+输出：
+```sql
+IF OBJECT_ID(N'[dbo].[MySequence]', N'SO') IS NULL
+BEGIN
+    CREATE SEQUENCE [dbo].[MySequence] START WITH 1 INCREMENT BY 1
+END
+```
+
+### 10. CREATE ROLE
+输入：
+```sql
+CREATE ROLE [TestRole]
+```
+输出：
+```sql
+IF DATABASE_PRINCIPAL_ID(N'[TestRole]') IS NULL
+BEGIN
+    CREATE ROLE [TestRole]
+END
+```
+
+## SQL Server 2014 兼容性说明
+
+本工具专门针对 SQL Server 2014 常用的升级脚本操作进行优化，涵盖了以下主要场景：
+
+### 数据定义语言 (DDL) 支持
+- **表操作**: CREATE TABLE, DROP TABLE, ALTER TABLE
+- **列操作**: ADD COLUMN, ALTER COLUMN, DROP COLUMN  
+- **索引操作**: CREATE INDEX, DROP INDEX（支持 UNIQUE/CLUSTERED/NONCLUSTERED）
+- **约束操作**: ADD CONSTRAINT, DROP CONSTRAINT, 默认约束管理
+- **架构管理**: CREATE SCHEMA, DROP SCHEMA
+- **存储过程**: CREATE PROCEDURE, ALTER PROCEDURE, CREATE OR ALTER（2014 兼容包装）
+- **视图**: CREATE VIEW, ALTER VIEW, CREATE OR ALTER（2014 兼容包装）
+- **函数**: CREATE FUNCTION, ALTER FUNCTION（2014 兼容包装）
+- **触发器**: CREATE TRIGGER, ALTER TRIGGER（2014 兼容包装）
+- **用户定义类型**: CREATE TYPE (标量/表类型), DROP TYPE
+- **同义词**: CREATE SYNONYM, DROP SYNONYM
+- **序列**: CREATE SEQUENCE, ALTER SEQUENCE, DROP SEQUENCE（SQL 2012+ 功能）
+
+### 安全对象支持  
+- **角色管理**: CREATE ROLE, DROP ROLE
+- **用户管理**: CREATE USER, DROP USER
+
+### 扩展属性支持
+- **表级扩展属性**: sp_addextendedproperty / sp_updateextendedproperty（自动条件化）
+- **列级扩展属性**: 完整的位置参数与命名参数支持
+
+### 2014 特有功能
+- **CREATE OR ALTER 包装**: 自动转换为 2014 兼容的 DROP + CREATE 模式
+- **安全检查**: 所有 DROP 操作都通过系统视图进行存在性验证
+- **批处理支持**: 正确处理 GO 分隔的批处理脚本
 按执行顺序（概念分组）：
 - 危险删除类（可丢弃或条件包装）
   - `DropTableToEmptyTransform` / `DropTableTransform`
@@ -126,6 +249,24 @@ END
   - `DropConstraintTransform`
   - `DropDefaultConstraintSmartTransform`
   - `DropIndexTransform`
+- 架构管理
+  - `CreateSchemaTransform`
+  - `DropSchemaTransform`
+- 用户定义类型
+  - `CreateUserDefinedTypeTransform`
+  - `DropUserDefinedTypeTransform`
+- 同义词
+  - `CreateSynonymTransform`
+  - `DropSynonymTransform`
+- 序列对象（SQL Server 2012+）
+  - `CreateSequenceTransform`
+  - `AlterSequenceTransform`
+  - `DropSequenceTransform`
+- 安全对象
+  - `CreateRoleTransform`
+  - `DropRoleTransform`
+  - `CreateUserTransform`
+  - `DropUserTransform`
 - 清理
   - `ColumnPrefixDiscardTransform`
   - （以及可扩展的 `GenericRegexWrapTransform` 等自定义包装）
@@ -173,6 +314,56 @@ File.WriteAllText("upgrade.idempotent.sql", outputSql);
 - 不处理跨批次依赖的重排（假设原始顺序正确）。
 - 只处理常见语法形态；非常规写法可能不会命中规则。
 - 请在生产前审阅生成的幂等脚本，确保符合业务预期。
+- 权限相关语句（GRANT/REVOKE/DENY）暂未支持自动包装。
+- CREATE LOGIN 等服务器级对象暂未纳入处理范围。
+
+## 支持的完整 SQL 操作清单
+
+### ✅ 已支持的操作
+| 操作类型 | SQL 语句 | 检查条件 | 备注 |
+|---------|----------|----------|------|
+| 表管理 | `CREATE TABLE` | `OBJECT_ID(..., 'U')` | 用户表 |
+| | `DROP TABLE` | `OBJECT_ID(..., 'U')` | 可配置丢弃或包装 |
+| 列管理 | `ADD COLUMN` | `COL_LENGTH(...)` | 添加新列 |
+| | `ALTER COLUMN` | `COL_LENGTH(...)` | 修改列定义 |
+| | `DROP COLUMN` | `COL_LENGTH(...)` | 可配置丢弃或包装 |
+| 索引管理 | `CREATE INDEX` | `sys.indexes` | 所有索引类型 |
+| | `DROP INDEX` | `sys.indexes` | 安全删除 |
+| 约束管理 | `ADD CONSTRAINT` | `sys.objects` | 各类约束 |
+| | `DROP CONSTRAINT` | `sys.objects` | 安全删除 |
+| | 默认约束 | 智能检测 | DF_ 约束管理 |
+| 存储过程 | `CREATE PROCEDURE` | `OBJECT_ID(..., 'P')` | 2014 兼容包装 |
+| | `CREATE OR ALTER PROCEDURE` | 转换处理 | 自动转换语法 |
+| 视图 | `CREATE VIEW` | `OBJECT_ID(..., 'V')` | 2014 兼容包装 |
+| | `CREATE OR ALTER VIEW` | 转换处理 | 自动转换语法 |
+| 函数 | `CREATE FUNCTION` | `OBJECT_ID(...)` | 2014 兼容包装 |
+| | `CREATE OR ALTER FUNCTION` | 转换处理 | 自动转换语法 |
+| 触发器 | `CREATE TRIGGER` | `OBJECT_ID(..., 'TR')` | 2014 兼容包装 |
+| | `CREATE OR ALTER TRIGGER` | 转换处理 | 自动转换语法 |
+| 架构 | `CREATE SCHEMA` | `SCHEMA_ID(...)` | 架构管理 |
+| | `DROP SCHEMA` | `SCHEMA_ID(...)` | 安全删除 |
+| 用户类型 | `CREATE TYPE` | `TYPE_ID(...)` | 标量/表类型 |
+| | `DROP TYPE` | `TYPE_ID(...)` | 安全删除 |
+| 同义词 | `CREATE SYNONYM` | `OBJECT_ID(..., 'SN')` | 同义词管理 |
+| | `DROP SYNONYM` | `OBJECT_ID(..., 'SN')` | 安全删除 |
+| 序列 | `CREATE SEQUENCE` | `OBJECT_ID(..., 'SO')` | SQL 2012+ |
+| | `ALTER SEQUENCE` | `OBJECT_ID(..., 'SO')` | 参数修改 |
+| | `DROP SEQUENCE` | `OBJECT_ID(..., 'SO')` | 安全删除 |
+| 安全 | `CREATE ROLE` | `DATABASE_PRINCIPAL_ID(...)` | 数据库角色 |
+| | `DROP ROLE` | `DATABASE_PRINCIPAL_ID(...)` | 安全删除 |
+| | `CREATE USER` | `DATABASE_PRINCIPAL_ID(...)` | 数据库用户 |
+| | `DROP USER` | `DATABASE_PRINCIPAL_ID(...)` | 安全删除 |
+| 扩展属性 | `sp_addextendedproperty` | `sys.extended_properties` | 表级/列级 |
+| | `sp_updateextendedproperty` | 自动转换 | 存在则更新 |
+
+### ❌ 暂不支持的操作
+- `GRANT` / `REVOKE` / `DENY` 权限管理语句
+- `CREATE LOGIN` / `ALTER LOGIN` / `DROP LOGIN` 服务器级登录
+- `CREATE DATABASE` / `ALTER DATABASE` 数据库级操作
+- `CREATE PARTITION FUNCTION/SCHEME` 分区对象
+- `CREATE AGGREGATE` 用户定义聚合函数
+- `CREATE ASSEMBLY` .NET 程序集（SQL CLR）
+- `CREATE CERTIFICATE` / `CREATE KEY` 加密对象
 
 ## License
 尚未声明。如需开源分发，请补充 LICENSE 文件并在此处更新说明。
