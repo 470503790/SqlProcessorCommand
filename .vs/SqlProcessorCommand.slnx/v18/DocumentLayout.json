@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "E:\\Github\\SqlProcessorCommand\\",
+  "WorkspaceRootPath": "D:\\GitHub\\SqlProcessorCommand\\",
   "Documents": [],
   "DocumentGroupContainers": [
     {
@@ -11,6 +11,10 @@
           "DockedWidth": 269,
           "SelectedChildIndex": -1,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{004be353-6879-467c-9d1e-9ac23cdf6d49}"

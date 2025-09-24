@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.0.11005.162 d18.0
+VisualStudioVersion = 18.0.11005.162
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlProcessorCommand", "SqlProcessorCommand.csproj", "{63DD0C93-6E0A-BA40-59E0-6D0782DEBAF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlProcessorTests", "SqlProcessorTests\SqlProcessorTests\SqlProcessorTests.csproj", "{FB0188EB-D2F8-4077-BC9E-8B8916CD15D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{63DD0C93-6E0A-BA40-59E0-6D0782DEBAF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63DD0C93-6E0A-BA40-59E0-6D0782DEBAF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63DD0C93-6E0A-BA40-59E0-6D0782DEBAF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB0188EB-D2F8-4077-BC9E-8B8916CD15D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB0188EB-D2F8-4077-BC9E-8B8916CD15D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB0188EB-D2F8-4077-BC9E-8B8916CD15D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB0188EB-D2F8-4077-BC9E-8B8916CD15D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

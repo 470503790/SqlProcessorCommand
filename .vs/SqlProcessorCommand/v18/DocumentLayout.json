@@ -1,7 +1,22 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "E:\\Github\\SqlProcessorCommand\\",
-  "Documents": [],
+  "WorkspaceRootPath": "D:\\GitHub\\SqlProcessorCommand\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|SqlProcessorTests||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{63DD0C93-6E0A-BA40-59E0-6D0782DEBAF7}|SqlProcessorCommand.csproj|d:\\github\\sqlprocessorcommand\\sqlprocessorcommand.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{63DD0C93-6E0A-BA40-59E0-6D0782DEBAF7}|SqlProcessorCommand.csproj|solutionrelative:sqlprocessorcommand.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB0188EB-D2F8-4077-BC9E-8B8916CD15D3}|SqlProcessorTests\\SqlProcessorTests\\SqlProcessorTests.csproj|D:\\GitHub\\SqlProcessorCommand\\sqlprocessortests\\sqlprocessortests\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB0188EB-D2F8-4077-BC9E-8B8916CD15D3}|SqlProcessorTests\\SqlProcessorTests\\SqlProcessorTests.csproj|solutionrelative:sqlprocessortests\\sqlprocessortests\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB0188EB-D2F8-4077-BC9E-8B8916CD15D3}|SqlProcessorTests\\SqlProcessorTests\\SqlProcessorTests.csproj|d:\\github\\sqlprocessorcommand\\sqlprocessortests\\sqlprocessortests\\||{B270807C-D8C6-49EB-8EBE-8E8D566637A1}|5e9a8ac2-4f34-4521-858f-4c248ba31532"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,8 +24,32 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SqlProcessorTests",
+              "DocumentMoniker": "D:\\GitHub\\SqlProcessorCommand\\SqlProcessorTests\\SqlProcessorTests\\SqlProcessorTests.csproj",
+              "RelativeDocumentMoniker": "SqlProcessorTests\\SqlProcessorTests\\SqlProcessorTests.csproj",
+              "ToolTip": "D:\\GitHub\\SqlProcessorCommand\\SqlProcessorTests\\SqlProcessorTests\\SqlProcessorTests.csproj",
+              "RelativeToolTip": "SqlProcessorTests\\SqlProcessorTests\\SqlProcessorTests.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-09-24T02:02:43.007Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SqlProcessorCommand",
+              "DocumentMoniker": "D:\\GitHub\\SqlProcessorCommand\\SqlProcessorCommand.csproj",
+              "RelativeDocumentMoniker": "SqlProcessorCommand.csproj",
+              "ToolTip": "D:\\GitHub\\SqlProcessorCommand\\SqlProcessorCommand.csproj",
+              "RelativeToolTip": "SqlProcessorCommand.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-09-24T02:02:34.443Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{004be353-6879-467c-9d1e-9ac23cdf6d49}"
@@ -58,6 +97,26 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{c6f34f0d-7ae5-4f3a-be61-fe0c21ae9eb8}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UnitTest1.cs",
+              "DocumentMoniker": "D:\\GitHub\\SqlProcessorCommand\\SqlProcessorTests\\SqlProcessorTests\\UnitTest1.cs",
+              "RelativeDocumentMoniker": "SqlProcessorTests\\SqlProcessorTests\\UnitTest1.cs",
+              "ToolTip": "D:\\GitHub\\SqlProcessorCommand\\SqlProcessorTests\\SqlProcessorTests\\UnitTest1.cs",
+              "RelativeToolTip": "SqlProcessorTests\\SqlProcessorTests\\UnitTest1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-24T02:02:03.018Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
             }
           ]
         },
