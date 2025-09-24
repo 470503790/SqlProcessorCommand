@@ -9,6 +9,17 @@
     <OutputType>Exe</OutputType>
     <StartupObject>SqlProcessorCommand.Program</StartupObject>
     <NuGetAuditLevel>low</NuGetAuditLevel>
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Product>SqlProcessorCommand</Product>
+    <Company>470503790</Company>
+    <Authors>470503790</Authors>
+    <Copyright>Copyright © 2025 470503790</Copyright>
+    <Description>将原始 SQL Server 脚本转换为"幂等"脚本：可多次重复执行而不会因为对象已存在/不存在等原因失败，降低发布脚本的风险。</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/470503790/SqlProcessorCommand</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
   <ItemGroup>
     <Compile Update="Properties\Settings.Designer.cs">
