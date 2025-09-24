@@ -71,6 +71,19 @@
     <Compile Include="CreateUserTransformTests.cs" />
     <Compile Include="ProcCreateAlterWrapper2014Tests.cs" />
     <Compile Include="AddConstraintTransformTests.cs" />
+    <Compile Include="DropColumnTransformTests.cs" />
+    <Compile Include="AlterSequenceTransformTests.cs" />
+    <Compile Include="CreateOrAlterTriggerTransformTests.cs" />
+    <Compile Include="FunctionCreateAlterWrapper2014Tests.cs" />
+    <Compile Include="DropRoleTransformTests.cs" />
+    <Compile Include="CreateOrAlterViewTransformTests.cs" />
+    <Compile Include="TriggerCreateAlterWrapper2014Tests.cs" />
+    <Compile Include="DropSynonymTransformTests.cs" />
+    <Compile Include="DropUserTransformTests.cs" />
+    <Compile Include="DropSchemaTransformTests.cs" />
+    <Compile Include="AddDefaultConstraintTransformTests.cs" />
+    <Compile Include="DropColumnToEmptyTransformTests.cs" />
+    <Compile Include="ColumnPrefixDiscardTransformTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
