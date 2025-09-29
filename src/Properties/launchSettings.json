@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SqlProcessorCommand": {
+      "commandName": "Project",
+      "commandLineArgs": "-i input.sql -o output.sql"
+    }
+  }
+}

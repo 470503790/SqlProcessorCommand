@@ -1,18 +1,38 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\GitHub\\SqlProcessorCommand\\",
+  "WorkspaceRootPath": "E:\\Github\\SqlProcessorCommand\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\GitHub\\SqlProcessorCommand\\obj\\Debug\\net48\\SqlProcessorCommand.AssemblyInfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:obj\\Debug\\net48\\SqlProcessorCommand.AssemblyInfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{66BECF01-4348-EE49-944A-96A7E9053AF0}|src\\SqlProcessorCommand.csproj|e:\\github\\sqlprocessorcommand\\src\\transforms\\addcolumntransform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{66BECF01-4348-EE49-944A-96A7E9053AF0}|src\\SqlProcessorCommand.csproj|solutionrelative:src\\transforms\\addcolumntransform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\GitHub\\SqlProcessorCommand\\SqlProcessorTests\\SqlProcessorTests\\packages.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SqlProcessorTests\\SqlProcessorTests\\packages.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+      "AbsoluteMoniker": "D:0:0:{66BECF01-4348-EE49-944A-96A7E9053AF0}|src\\SqlProcessorCommand.csproj|e:\\github\\sqlprocessorcommand\\src\\transforms\\dropdefaultconstraintsmarttransform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{66BECF01-4348-EE49-944A-96A7E9053AF0}|src\\SqlProcessorCommand.csproj|solutionrelative:src\\transforms\\dropdefaultconstraintsmarttransform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\GitHub\\SqlProcessorCommand\\SqlProcessorTests\\SqlProcessorTests\\ViewCreateAlterWrapper2014Tests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SqlProcessorTests\\SqlProcessorTests\\ViewCreateAlterWrapper2014Tests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{66BECF01-4348-EE49-944A-96A7E9053AF0}|src\\SqlProcessorCommand.csproj|e:\\github\\sqlprocessorcommand\\src\\transforms\\altercolumntransform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{66BECF01-4348-EE49-944A-96A7E9053AF0}|src\\SqlProcessorCommand.csproj|solutionrelative:src\\transforms\\altercolumntransform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Github\\SqlProcessorCommand\\Tests\\DropTableToEmptyTransformTests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Tests\\DropTableToEmptyTransformTests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Github\\SqlProcessorCommand\\Tests\\DropTableTransformTests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Tests\\DropTableTransformTests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Github\\SqlProcessorCommand\\Tests\\AlterColumnTransformTests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Tests\\AlterColumnTransformTests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{66BECF01-4348-EE49-944A-96A7E9053AF0}|src\\SqlProcessorCommand.csproj|e:\\github\\sqlprocessorcommand\\src\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{66BECF01-4348-EE49-944A-96A7E9053AF0}|src\\SqlProcessorCommand.csproj|solutionrelative:src\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{66BECF01-4348-EE49-944A-96A7E9053AF0}|src\\SqlProcessorCommand.csproj|e:\\github\\sqlprocessorcommand\\src\\sqlprocessorcommand.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{66BECF01-4348-EE49-944A-96A7E9053AF0}|src\\SqlProcessorCommand.csproj|solutionrelative:src\\sqlprocessorcommand.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,7 +42,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 14,
+          "SelectedChildIndex": 13,
           "Children": [
             {
               "$type": "Bookmark",
@@ -73,38 +93,110 @@
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "packages.config",
-              "DocumentMoniker": "D:\\GitHub\\SqlProcessorCommand\\SqlProcessorTests\\SqlProcessorTests\\packages.config",
-              "RelativeDocumentMoniker": "SqlProcessorTests\\SqlProcessorTests\\packages.config",
-              "ToolTip": "D:\\GitHub\\SqlProcessorCommand\\SqlProcessorTests\\SqlProcessorTests\\packages.config",
-              "RelativeToolTip": "SqlProcessorTests\\SqlProcessorTests\\packages.config",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
-              "WhenOpened": "2025-09-24T08:46:13.877Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ViewCreateAlterWrapper2014Tests.cs",
-              "DocumentMoniker": "D:\\GitHub\\SqlProcessorCommand\\SqlProcessorTests\\SqlProcessorTests\\ViewCreateAlterWrapper2014Tests.cs",
-              "RelativeDocumentMoniker": "SqlProcessorTests\\SqlProcessorTests\\ViewCreateAlterWrapper2014Tests.cs",
-              "ToolTip": "D:\\GitHub\\SqlProcessorCommand\\SqlProcessorTests\\SqlProcessorTests\\ViewCreateAlterWrapper2014Tests.cs",
-              "RelativeToolTip": "SqlProcessorTests\\SqlProcessorTests\\ViewCreateAlterWrapper2014Tests.cs",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-24T08:46:03.38Z"
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "SqlProcessorCommand.AssemblyInfo.cs",
-              "DocumentMoniker": "D:\\GitHub\\SqlProcessorCommand\\obj\\Debug\\net48\\SqlProcessorCommand.AssemblyInfo.cs",
-              "RelativeDocumentMoniker": "obj\\Debug\\net48\\SqlProcessorCommand.AssemblyInfo.cs",
-              "ToolTip": "D:\\GitHub\\SqlProcessorCommand\\obj\\Debug\\net48\\SqlProcessorCommand.AssemblyInfo.cs",
-              "RelativeToolTip": "obj\\Debug\\net48\\SqlProcessorCommand.AssemblyInfo.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAALAAAAAAAAAA==",
+              "Title": "AddColumnTransform.cs",
+              "DocumentMoniker": "E:\\Github\\SqlProcessorCommand\\src\\Transforms\\AddColumnTransform.cs",
+              "RelativeDocumentMoniker": "src\\Transforms\\AddColumnTransform.cs",
+              "ToolTip": "E:\\Github\\SqlProcessorCommand\\src\\Transforms\\AddColumnTransform.cs",
+              "RelativeToolTip": "src\\Transforms\\AddColumnTransform.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAIwBwAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-24T08:45:44.839Z",
+              "WhenOpened": "2025-09-25T09:45:50.684Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DropDefaultConstraintSmartTransform.cs",
+              "DocumentMoniker": "E:\\Github\\SqlProcessorCommand\\src\\Transforms\\DropDefaultConstraintSmartTransform.cs",
+              "RelativeDocumentMoniker": "src\\Transforms\\DropDefaultConstraintSmartTransform.cs",
+              "ToolTip": "E:\\Github\\SqlProcessorCommand\\src\\Transforms\\DropDefaultConstraintSmartTransform.cs",
+              "RelativeToolTip": "src\\Transforms\\DropDefaultConstraintSmartTransform.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABEAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-25T07:13:50.912Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DropTableToEmptyTransformTests.cs",
+              "DocumentMoniker": "E:\\Github\\SqlProcessorCommand\\Tests\\DropTableToEmptyTransformTests.cs",
+              "RelativeDocumentMoniker": "Tests\\DropTableToEmptyTransformTests.cs",
+              "ToolTip": "E:\\Github\\SqlProcessorCommand\\Tests\\DropTableToEmptyTransformTests.cs",
+              "RelativeToolTip": "Tests\\DropTableToEmptyTransformTests.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAAADcAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-25T07:09:50.652Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DropTableTransformTests.cs",
+              "DocumentMoniker": "E:\\Github\\SqlProcessorCommand\\Tests\\DropTableTransformTests.cs",
+              "RelativeDocumentMoniker": "Tests\\DropTableTransformTests.cs",
+              "ToolTip": "E:\\Github\\SqlProcessorCommand\\Tests\\DropTableTransformTests.cs",
+              "RelativeToolTip": "Tests\\DropTableTransformTests.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-25T07:09:36.413Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AlterColumnTransformTests.cs",
+              "DocumentMoniker": "E:\\Github\\SqlProcessorCommand\\Tests\\AlterColumnTransformTests.cs",
+              "RelativeDocumentMoniker": "Tests\\AlterColumnTransformTests.cs",
+              "ToolTip": "E:\\Github\\SqlProcessorCommand\\Tests\\AlterColumnTransformTests.cs",
+              "RelativeToolTip": "Tests\\AlterColumnTransformTests.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAF4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-25T07:09:23.359Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AlterColumnTransform.cs",
+              "DocumentMoniker": "E:\\Github\\SqlProcessorCommand\\src\\Transforms\\AlterColumnTransform.cs",
+              "RelativeDocumentMoniker": "src\\Transforms\\AlterColumnTransform.cs",
+              "ToolTip": "E:\\Github\\SqlProcessorCommand\\src\\Transforms\\AlterColumnTransform.cs",
+              "RelativeToolTip": "src\\Transforms\\AlterColumnTransform.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAA8AAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-25T06:52:35.818Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "SqlProcessorCommand",
+              "DocumentMoniker": "E:\\Github\\SqlProcessorCommand\\src\\SqlProcessorCommand.csproj",
+              "RelativeDocumentMoniker": "src\\SqlProcessorCommand.csproj",
+              "ToolTip": "E:\\Github\\SqlProcessorCommand\\src\\SqlProcessorCommand.csproj",
+              "RelativeToolTip": "src\\SqlProcessorCommand.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-09-25T03:53:54.592Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Program.cs",
+              "DocumentMoniker": "E:\\Github\\SqlProcessorCommand\\src\\Program.cs",
+              "RelativeDocumentMoniker": "src\\Program.cs",
+              "ToolTip": "E:\\Github\\SqlProcessorCommand\\src\\Program.cs",
+              "RelativeToolTip": "src\\Program.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAiwBAAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-25T03:53:30.463Z",
               "EditorCaption": ""
             }
           ]
