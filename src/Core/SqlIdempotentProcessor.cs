@@ -135,6 +135,7 @@ namespace SqlProcessorCommand
             p.Add(new CreateOrAlterProcedureTransform());
             p.Add(new CreateOrAlterViewTransform());
             p.Add(new CreateOrAlterTriggerTransform());
+            p.Add(new CreateOrAlterFunctionTransform());
             p.Add(new ProcCreateAlterWrapper2014());
             p.Add(new ViewCreateAlterWrapper2014());
             p.Add(new TriggerCreateAlterWrapper2014());
