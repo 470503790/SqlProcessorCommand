@@ -29,6 +29,14 @@ namespace SqlProcessorCommand
                 if (HasFlag(args, "--discard-drop-column")) discardDropColumn = true;
                 if (HasFlag(args, "--keep-drop-column"))    discardDropColumn = false;
 
+                bool? discardDropConstraint = null; // null=默认(true); true=丢弃; false=保留
+                if (HasFlag(args, "--discard-drop-constraint")) discardDropConstraint = true;
+                if (HasFlag(args, "--keep-drop-constraint"))    discardDropConstraint = false;
+
+                bool? discardDropIndex = null; // null=默认(true); true=丢弃; false=保留
+                if (HasFlag(args, "--discard-drop-index")) discardDropIndex = true;
+                if (HasFlag(args, "--keep-drop-index"))    discardDropIndex = false;
+
                 if (string.IsNullOrWhiteSpace(input))
                 {
                     Console.Error.WriteLine("ERROR: 必须指定输入文件，使用 -i <path> 或 --input <path>。");
@@ -60,6 +68,8 @@ namespace SqlProcessorCommand
                 {
                     DiscardDropTable = discardDropTable ?? true,
                     DiscardDropColumn = discardDropColumn ?? true,
+                    DiscardDropConstraint = discardDropConstraint ?? true,
+                    DiscardDropIndex = discardDropIndex ?? true,
                 };
 
                 var processor = new SqlIdempotentProcessor(options);
@@ -108,15 +118,24 @@ namespace SqlProcessorCommand
         {
             Console.WriteLine("用法:");
             Console.WriteLine("  SqlProcessorCommand --input <input.sql> [--output <out.sql>] [--name <tag>] [--encoding <enc>]");
+            Console.WriteLine("                       [--discard-drop-table | --keep-drop-table]");
             Console.WriteLine("                       [--discard-drop-column | --keep-drop-column]");
+            Console.WriteLine("                       [--discard-drop-constraint | --keep-drop-constraint]");
+            Console.WriteLine("                       [--discard-drop-index | --keep-drop-index]");
             Console.WriteLine();
             Console.WriteLine("参数:");
             Console.WriteLine("  -i, --input            输入 SQL 文件路径（必填）");
             Console.WriteLine("  -o, --output           输出 SQL 文件路径（可选；默认: <输入名>.<name|idempotent>.sql）");
             Console.WriteLine("  -n, --name             命名（用于输出文件名后缀；可选）");
             Console.WriteLine("      --encoding         文本编码，默认 utf-8（示例：gb2312, gbk, utf-16）");
-            Console.WriteLine("      --discard-drop-column  丢弃所有 ALTER TABLE ... DROP COLUMN 语句（默认开启）");
-            Console.WriteLine("      --keep-drop-column     保留 DROP COLUMN 语句（覆盖默认）");
+            Console.WriteLine("      --discard-drop-table       丢弃所有 DROP TABLE 语句（默认开启）");
+            Console.WriteLine("      --keep-drop-table          保留 DROP TABLE 语句（覆盖默认）");
+            Console.WriteLine("      --discard-drop-column      丢弃所有 ALTER TABLE ... DROP COLUMN 语句（默认开启）");
+            Console.WriteLine("      --keep-drop-column         保留 DROP COLUMN 语句（覆盖默认）");
+            Console.WriteLine("      --discard-drop-constraint  丢弃所有 ALTER TABLE ... DROP CONSTRAINT 语句（默认开启）");
+            Console.WriteLine("      --keep-drop-constraint     保留 DROP CONSTRAINT 语句（覆盖默认）");
+            Console.WriteLine("      --discard-drop-index       丢弃所有 DROP INDEX 语句（默认开启）");
+            Console.WriteLine("      --keep-drop-index          保留 DROP INDEX 语句（覆盖默认）");
             Console.WriteLine("  -h, --help             显示帮助");
         }
     }
