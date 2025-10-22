@@ -23,6 +23,14 @@ namespace SqlProcessorCommand
             /// 丢弃 ALTER TABLE ... DROP COLUMN 语句（默认 true）。
             /// </summary>
             public bool DiscardDropColumn { get; set; } = true;
+            /// <summary>
+            /// 丢弃 ALTER TABLE ... DROP CONSTRAINT 语句（默认 true）。
+            /// </summary>
+            public bool DiscardDropConstraint { get; set; } = true;
+            /// <summary>
+            /// 丢弃 DROP INDEX 语句（默认 true）。
+            /// </summary>
+            public bool DiscardDropIndex { get; set; } = true;
         }
 
         private readonly List<ISqlBlockTransform> _pipeline;
@@ -134,9 +142,26 @@ namespace SqlProcessorCommand
 
             // 索引/约束/杂项
             p.Add(new CreateIndexTransform());
-            p.Add(new DropConstraintTransform());
+            
+            if (opt.DiscardDropConstraint)
+            {
+                p.Add(new DropConstraintToEmptyTransform());       // 丢弃 DROP CONSTRAINT
+            }
+            else
+            {
+                p.Add(new DropConstraintTransform());              // DROP CONSTRAINT 安全化
+            }
+            
             p.Add(new DropDefaultConstraintSmartTransform());
-            p.Add(new DropIndexTransform());
+            
+            if (opt.DiscardDropIndex)
+            {
+                p.Add(new DropIndexToEmptyTransform());            // 丢弃 DROP INDEX
+            }
+            else
+            {
+                p.Add(new DropIndexTransform());                   // DROP INDEX 安全化
+            }
 
             // 架构管理
             p.Add(new CreateSchemaTransform());
