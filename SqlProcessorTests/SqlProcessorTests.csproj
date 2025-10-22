@@ -56,6 +56,7 @@
     <Compile Include="AlterSequenceTransformTests.cs" />
     <Compile Include="ColumnPrefixDiscardTransformTests.cs" />
     <Compile Include="CreateIndexTransformTests.cs" />
+    <Compile Include="CreateOrAlterFunctionTransformTests.cs" />
     <Compile Include="CreateOrAlterProcedureTransformTests.cs" />
     <Compile Include="CreateOrAlterTriggerTransformTests.cs" />
     <Compile Include="CreateOrAlterViewTransformTests.cs" />

@@ -118,5 +118,24 @@ GO";
             Assert.IsFalse(result.Contains("DROP INDEX"));
             Assert.IsFalse(result.Contains("DROP TABLE"));
         }
+
+        [TestMethod]
+        public void Transform_AlterFunction_ConvertsToDropAndCreate()
+        {
+            // Arrange
+            string sql = @"ALTER FUNCTION [dbo].[TestFunction]() RETURNS INT AS BEGIN RETURN 1; END
+GO";
+            var options = new SqlIdempotentProcessor.Options();
+            var processor = new SqlIdempotentProcessor(options);
+
+            // Act
+            string result = processor.Transform(sql);
+
+            // Assert
+            Assert.IsTrue(result.Contains("IF OBJECT_ID(N'[dbo].[TestFunction]') IS NOT NULL"));
+            Assert.IsTrue(result.Contains("DROP FUNCTION [dbo].[TestFunction];"));
+            Assert.IsTrue(result.Contains("CREATE FUNCTION [dbo].[TestFunction]() RETURNS INT AS BEGIN RETURN 1; END"));
+            Assert.IsFalse(result.Contains("ALTER FUNCTION"));
+        }
     }
 }
