@@ -34,6 +34,8 @@ sqlcmd -S prod-server -d MyDatabase -i upgrade_v1.2.safe.sql
 SqlProcessorCommand --input <input.sql> [--output <out.sql>] [--name <tag>] [--encoding <enc>]
                     [--discard-drop-table | --keep-drop-table]
                     [--discard-drop-column | --keep-drop-column]
+                    [--discard-drop-constraint | --keep-drop-constraint]
+                    [--discard-drop-index | --keep-drop-index]
 ```
 
 ### 参数说明
@@ -47,6 +49,10 @@ SqlProcessorCommand --input <input.sql> [--output <out.sql>] [--name <tag>] [--e
 | `--keep-drop-table` | 保留 `DROP TABLE`，但会包装成“存在才删” | - |
 | `--discard-drop-column` | 丢弃所有 `ALTER TABLE ... DROP COLUMN` | 开启 |
 | `--keep-drop-column` | 保留列删除，包装成“存在才删” | - |
+| `--discard-drop-constraint` | 丢弃所有 `ALTER TABLE ... DROP CONSTRAINT` | 开启 |
+| `--keep-drop-constraint` | 保留约束删除，包装成"存在才删" | - |
+| `--discard-drop-index` | 丢弃所有 `DROP INDEX` 语句 | 开启 |
+| `--keep-drop-index` | 保留索引删除，包装成"存在才删" | - |
 | `-h, --help` | 显示帮助 | - |
 
 > `--discard-*` 与 `--keep-*` 二选一；若都不写，默认“丢弃”。
@@ -59,7 +65,8 @@ SqlProcessorCommand -i upgrade.sql
 
 ### 自定义后缀与保留 DROP
 ```
-SqlProcessorCommand -i upgrade.sql -n safe --keep-drop-table --keep-drop-column
+SqlProcessorCommand -i upgrade.sql -n safe --keep-drop-table --keep-drop-column --keep-drop-constraint --keep-drop-index
+```
 ```
 输出：`upgrade.safe.sql`
 
@@ -107,7 +114,37 @@ BEGIN
 END
 ```
 
-### 4. ALTER COLUMN
+### 4. DROP CONSTRAINT（默认丢弃）
+输入：
+```sql
+ALTER TABLE [dbo].[TestTable] DROP CONSTRAINT [FK_TestConstraint];
+```
+默认输出：空（语句被移除）。
+
+若使用 `--keep-drop-constraint`：
+```sql
+IF EXISTS (SELECT 1 FROM sys.objects WHERE name = N'FK_TestConstraint' AND parent_object_id = OBJECT_ID(N'[dbo].[TestTable]'))
+BEGIN
+    ALTER TABLE [dbo].[TestTable] DROP CONSTRAINT [FK_TestConstraint];
+END
+```
+
+### 5. DROP INDEX（默认丢弃）
+输入：
+```sql
+DROP INDEX [IX_TestTable_Column] ON [dbo].[TestTable];
+```
+默认输出：空（语句被移除）。
+
+若使用 `--keep-drop-index`：
+```sql
+IF EXISTS (SELECT 1 FROM sys.indexes WHERE name = N'IX_TestTable_Column' AND object_id = OBJECT_ID(N'[dbo].[TestTable]'))
+BEGIN
+    DROP INDEX [IX_TestTable_Column] ON [dbo].[TestTable];
+END
+```
+
+### 6. ALTER COLUMN
 输入：
 ```sql
 ALTER TABLE dbo.T_A ALTER COLUMN Name NVARCHAR(100) NULL;
@@ -120,9 +157,9 @@ BEGIN
 END
 ```
 
-### 5. ADD COLUMN / ADD CONSTRAINT / 默认约束
+### 7. ADD COLUMN / ADD CONSTRAINT / 默认约束
 类似地被改写为“列/约束不存在时才添加”。
-### 6. CREATE SCHEMA
+### 8. CREATE SCHEMA
 输入：
 ```sql
 CREATE SCHEMA [TestSchema]
@@ -135,7 +172,7 @@ BEGIN
 END
 ```
 
-### 7. CREATE USER-DEFINED TYPE
+### 9. CREATE USER-DEFINED TYPE
 输入：
 ```sql
 CREATE TYPE [dbo].[MyTableType] AS TABLE (
@@ -154,7 +191,7 @@ BEGIN
 END
 ```
 
-### 8. CREATE SYNONYM
+### 10. CREATE SYNONYM
 输入：
 ```sql
 CREATE SYNONYM [dbo].[MyTableSyn] FOR [dbo].[MyTable]
@@ -167,7 +204,7 @@ BEGIN
 END
 ```
 
-### 9. CREATE SEQUENCE (SQL Server 2012+)
+### 11. CREATE SEQUENCE (SQL Server 2012+)
 输入：
 ```sql
 CREATE SEQUENCE [dbo].[MySequence] START WITH 1 INCREMENT BY 1
@@ -180,7 +217,7 @@ BEGIN
 END
 ```
 
-### 10. CREATE ROLE
+### 12. CREATE ROLE
 输入：
 ```sql
 CREATE ROLE [TestRole]
@@ -285,8 +322,10 @@ public interface ISqlBlockTransform {
 using SqlProcessorCommand;
 
 var options = new SqlIdempotentProcessor.Options {
-    DiscardDropTable = true,      // 或 false
-    DiscardDropColumn = true      // 或 false
+    DiscardDropTable = true,          // 或 false，默认 true
+    DiscardDropColumn = true,         // 或 false，默认 true
+    DiscardDropConstraint = true,     // 或 false，默认 true
+    DiscardDropIndex = true           // 或 false，默认 true
 };
 var proc = new SqlIdempotentProcessor(options);
 string outputSql = proc.Transform(File.ReadAllText("upgrade.sql"));
