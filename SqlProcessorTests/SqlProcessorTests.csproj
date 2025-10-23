@@ -69,7 +69,9 @@
     <Compile Include="CreateUserTransformTests.cs" />
     <Compile Include="DropColumnToEmptyTransformTests.cs" />
     <Compile Include="DropColumnTransformTests.cs" />
+    <Compile Include="DropConstraintToEmptyTransformTests.cs" />
     <Compile Include="DropConstraintTransformTests.cs" />
+    <Compile Include="DropIndexToEmptyTransformTests.cs" />
     <Compile Include="DropIndexTransformTests.cs" />
     <Compile Include="DropRoleTransformTests.cs" />
     <Compile Include="DropSchemaTransformTests.cs" />
