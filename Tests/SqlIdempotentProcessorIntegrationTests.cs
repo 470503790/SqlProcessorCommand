@@ -137,5 +137,80 @@ GO";
             Assert.IsTrue(result.Contains("CREATE FUNCTION [dbo].[TestFunction]() RETURNS INT AS BEGIN RETURN 1; END"));
             Assert.IsFalse(result.Contains("ALTER FUNCTION"));
         }
+
+        [TestMethod]
+        public void Transform_DropDefaultConstraint_IsNotDiscarded()
+        {
+            // Arrange
+            string sql = @"ALTER TABLE [dbo].[r_complaint_item] DROP CONSTRAINT [DF__r_complai__respo__1401A6ED]
+GO";
+            var options = new SqlIdempotentProcessor.Options { DiscardDropConstraint = true };
+            var processor = new SqlIdempotentProcessor(options);
+
+            // Act
+            string result = processor.Transform(sql);
+
+            // Assert
+            // Default constraints should NOT be discarded even with DiscardDropConstraint = true
+            Assert.IsTrue(result.Contains("DROP CONSTRAINT"), "Default constraint drop should not be discarded");
+            Assert.IsTrue(result.Contains("DF__r_complai__respo__1401A6ED"), "Default constraint name should be preserved");
+        }
+
+        [TestMethod]
+        public void Transform_DropDefaultConstraintWithKeepOption_IsNotWrapped()
+        {
+            // Arrange
+            string sql = @"ALTER TABLE [dbo].[TestTable] DROP CONSTRAINT [DF_TestTable_Status]
+GO";
+            var options = new SqlIdempotentProcessor.Options { DiscardDropConstraint = false };
+            var processor = new SqlIdempotentProcessor(options);
+
+            // Act
+            string result = processor.Transform(sql);
+
+            // Assert
+            // Default constraints should NOT be wrapped even with DiscardDropConstraint = false
+            Assert.IsTrue(result.Contains("DROP CONSTRAINT"), "Default constraint drop should be present");
+            Assert.IsFalse(result.Contains("IF EXISTS"), "Default constraint should not be wrapped with IF EXISTS");
+        }
+
+        [TestMethod]
+        public void Transform_DropNonDefaultConstraint_IsDiscarded()
+        {
+            // Arrange
+            string sql = @"ALTER TABLE [dbo].[TestTable] DROP CONSTRAINT [FK_TestConstraint]
+GO";
+            var options = new SqlIdempotentProcessor.Options { DiscardDropConstraint = true };
+            var processor = new SqlIdempotentProcessor(options);
+
+            // Act
+            string result = processor.Transform(sql);
+
+            // Assert
+            Assert.AreEqual(string.Empty, result.Trim(), "Non-default constraint should be discarded");
+        }
+
+        [TestMethod]
+        public void Transform_MixedConstraints_HandlesCorrectly()
+        {
+            // Arrange
+            string sql = @"ALTER TABLE [dbo].[TestTable] DROP CONSTRAINT [FK_TestConstraint]
+GO
+ALTER TABLE [dbo].[TestTable] DROP CONSTRAINT [DF_TestTable_Status]
+GO
+ALTER TABLE [dbo].[TestTable] DROP CONSTRAINT [CK_TestConstraint]
+GO";
+            var options = new SqlIdempotentProcessor.Options { DiscardDropConstraint = true };
+            var processor = new SqlIdempotentProcessor(options);
+
+            // Act
+            string result = processor.Transform(sql);
+
+            // Assert
+            // FK and CK should be discarded, DF should be kept
+            Assert.IsFalse(result.Contains("FK_TestConstraint"), "FK constraint should be discarded");
+            Assert.IsFalse(result.Contains("CK_TestConstraint"), "CK constraint should be discarded");
+            Assert.IsTrue(result.Contains("DF_TestTable_Status"), "Default constraint should NOT be discarded");
+        }
     }
 }

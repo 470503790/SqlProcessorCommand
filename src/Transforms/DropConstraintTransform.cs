@@ -1,3 +1,4 @@
+using System;
 using System.Text.RegularExpressions;
 
 namespace SqlProcessorCommand
@@ -5,13 +6,27 @@ namespace SqlProcessorCommand
     /// <summary>
     /// 安全删除约束：<c>ALTER TABLE ... DROP CONSTRAINT [name]</c><br/>
     /// - 仅当该约束存在且从属于该表时才删除。
+    /// - 排除默认约束（名称以 DF_ 或 DF__ 开头）
     /// </summary>
     internal sealed class DropConstraintTransform : ISqlBlockTransform
     {
         private static readonly Regex R =
             new Regex(@"^\s*ALTER\s+TABLE\s+(?:(?:\[(?<schema>[^\]]+)\])\.)?(?:\[(?<table>[^\]]+)\]|(?<table2>\w+))\s+DROP\s+CONSTRAINT\s+(?:\[(?<cname>[^\]]+)\]|(?<cname2>\w+))\b",
                       RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant);
-        public bool CanHandle(string block) => R.IsMatch(block);
+        
+        public bool CanHandle(string block)
+        {
+            var m = R.Match(block);
+            if (!m.Success)
+                return false;
+
+            var cname = m.Groups["cname"].Success ? m.Groups["cname"].Value : m.Groups["cname2"].Value;
+            
+            // 排除默认约束（名称以 DF_ 或 DF__ 开头）
+            return !cname.StartsWith("DF_", StringComparison.OrdinalIgnoreCase) &&
+                   !cname.StartsWith("DF__", StringComparison.OrdinalIgnoreCase);
+        }
+        
         public string Transform(string block)
         {
             var m = R.Match(block);
