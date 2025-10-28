@@ -18,10 +18,10 @@ namespace SqlProcessorCommand
         /// <summary>是否匹配 DROP CONSTRAINT 语句，但排除默认约束。</summary>
         public bool CanHandle(string block)
         {
-            if (!R.IsMatch(block))
+            var m = R.Match(block);
+            if (!m.Success)
                 return false;
 
-            var m = R.Match(block);
             var cname = m.Groups["cname"].Success ? m.Groups["cname"].Value : m.Groups["cname2"].Value;
             
             // 排除默认约束（名称以 DF_ 或 DF__ 开头）
