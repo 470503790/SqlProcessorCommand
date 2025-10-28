@@ -85,5 +85,57 @@ namespace SqlProcessorTests
             // Assert
             Assert.AreEqual(string.Empty, result);
         }
+
+        [TestMethod]
+        public void CanHandle_DefaultConstraintWithDF_ReturnsFalse()
+        {
+            // Arrange
+            string sql = "ALTER TABLE [dbo].[TestTable] DROP CONSTRAINT [DF_TestTable_Column]";
+            
+            // Act
+            bool result = _transform.CanHandle(sql);
+            
+            // Assert
+            Assert.IsFalse(result, "Default constraints with DF_ prefix should be excluded");
+        }
+
+        [TestMethod]
+        public void CanHandle_DefaultConstraintWithDFDouble_ReturnsFalse()
+        {
+            // Arrange
+            string sql = "ALTER TABLE [dbo].[r_complaint_item] DROP CONSTRAINT [DF__r_complai__respo__1401A6ED]";
+            
+            // Act
+            bool result = _transform.CanHandle(sql);
+            
+            // Assert
+            Assert.IsFalse(result, "Default constraints with DF__ prefix should be excluded");
+        }
+
+        [TestMethod]
+        public void CanHandle_DefaultConstraintWithoutBrackets_ReturnsFalse()
+        {
+            // Arrange
+            string sql = "ALTER TABLE dbo.TestTable DROP CONSTRAINT DF_TestTable_Status";
+            
+            // Act
+            bool result = _transform.CanHandle(sql);
+            
+            // Assert
+            Assert.IsFalse(result, "Default constraints without brackets should also be excluded");
+        }
+
+        [TestMethod]
+        public void CanHandle_DefaultConstraintCaseInsensitive_ReturnsFalse()
+        {
+            // Arrange
+            string sql = "ALTER TABLE [dbo].[TestTable] DROP CONSTRAINT [df_TestTable_Column]";
+            
+            // Act
+            bool result = _transform.CanHandle(sql);
+            
+            // Assert
+            Assert.IsFalse(result, "Default constraint check should be case-insensitive");
+        }
     }
 }
