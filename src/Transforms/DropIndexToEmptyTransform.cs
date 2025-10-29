@@ -10,7 +10,7 @@ namespace SqlProcessorCommand
     internal sealed class DropIndexToEmptyTransform : ISqlBlockTransform
     {
         private static readonly Regex R =
-            new Regex(@"^\s*DROP\s+INDEX\s+(?:\[(?<iname>[^\]]+)\]|(?<iname2>\w+))\s+ON\s+(?:(?:\[(?<schema>[^\]]+)\])\.)?(?:\[(?<table>[^\]]+)\]|(?<table2>\w+))\b",
+            new Regex(@"^\s*DROP\s+INDEX\s+(?:\[(?<iname>[^\]]+)\]|(?<iname2>\w+))\s+ON\s+(?:(?:\[(?<schema>[^\]]+)\])\.)?(?:\[(?<table>[^\]]+)\]|(?<table2>\w+))(?=\s|;|$)",
                       RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant);
 
         /// <summary>是否匹配 DROP INDEX 语句。</summary>

@@ -12,7 +12,7 @@ namespace SqlProcessorCommand
     internal sealed class DropConstraintToEmptyTransform : ISqlBlockTransform
     {
         private static readonly Regex R =
-            new Regex(@"^\s*ALTER\s+TABLE\s+(?:(?:\[(?<schema>[^\]]+)\])\.)?(?:\[(?<table>[^\]]+)\]|(?<table2>\w+))\s+DROP\s+CONSTRAINT\s+(?:\[(?<cname>[^\]]+)\]|(?<cname2>\w+))\b",
+            new Regex(@"^\s*ALTER\s+TABLE\s+(?:(?:\[(?<schema>[^\]]+)\])\.)?(?:\[(?<table>[^\]]+)\]|(?<table2>\w+))\s+DROP\s+CONSTRAINT\s+(?:\[(?<cname>[^\]]+)\]|(?<cname2>\w+))(?=\s|;|$)",
                       RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant);
 
         /// <summary>是否匹配 DROP CONSTRAINT 语句，但排除默认约束。</summary>

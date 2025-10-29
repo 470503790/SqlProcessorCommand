@@ -11,7 +11,7 @@ namespace SqlProcessorCommand
     internal sealed class DropConstraintTransform : ISqlBlockTransform
     {
         private static readonly Regex R =
-            new Regex(@"^\s*ALTER\s+TABLE\s+(?:(?:\[(?<schema>[^\]]+)\])\.)?(?:\[(?<table>[^\]]+)\]|(?<table2>\w+))\s+DROP\s+CONSTRAINT\s+(?:\[(?<cname>[^\]]+)\]|(?<cname2>\w+))\b",
+            new Regex(@"^\s*ALTER\s+TABLE\s+(?:(?:\[(?<schema>[^\]]+)\])\.)?(?:\[(?<table>[^\]]+)\]|(?<table2>\w+))\s+DROP\s+CONSTRAINT\s+(?:\[(?<cname>[^\]]+)\]|(?<cname2>\w+))(?=\s|;|$)",
                       RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant);
         
         public bool CanHandle(string block)

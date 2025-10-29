@@ -9,7 +9,7 @@ namespace SqlProcessorCommand
     internal sealed class DropIndexTransform : ISqlBlockTransform
     {
         private static readonly Regex R =
-            new Regex(@"^\s*DROP\s+INDEX\s+(?:\[(?<iname>[^\]]+)\]|(?<iname2>\w+))\s+ON\s+(?:(?:\[(?<schema>[^\]]+)\])\.)?(?:\[(?<table>[^\]]+)\]|(?<table2>\w+))\b",
+            new Regex(@"^\s*DROP\s+INDEX\s+(?:\[(?<iname>[^\]]+)\]|(?<iname2>\w+))\s+ON\s+(?:(?:\[(?<schema>[^\]]+)\])\.)?(?:\[(?<table>[^\]]+)\]|(?<table2>\w+))(?=\s|;|$)",
                       RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant);
         public bool CanHandle(string block) => R.IsMatch(block);
         public string Transform(string block)
