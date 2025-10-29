@@ -9,7 +9,7 @@ namespace SqlProcessorCommand
     internal sealed class ProcCreateAlterWrapper2014 : ISqlBlockTransform
     {
         private static readonly Regex R =
-            new Regex(@"^\s*CREATE\s+PROCEDURE\s+(?:(?:\[(?<schema>[^\]]+)\])\.)?(?:\[(?<name>[^\]]+)\]|(?<name2>\w+))\b",
+            new Regex(@"^\s*CREATE\s+PROCEDURE\s+(?:(?:\[(?<schema>[^\]]+)\])\.)?(?:\[(?<name>[^\]]+)\]|(?<name2>\w+))(?=\s|$)",
                       RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant);
         public bool CanHandle(string block) => R.IsMatch(block);
         public string Transform(string block)
