@@ -129,6 +129,36 @@ BEGIN
 END
 ```
 
+**注意：默认约束（Default Constraint）的特殊处理**
+
+默认约束（通常名称以 `DF_` 或 `DF__` 开头）不会被上述 DROP CONSTRAINT 规则处理，而是由专门的 `DropDefaultConstraintSmartTransform` 转换器处理。这是因为：
+
+1. **约束名可能未知**：开发人员通常不知道 SQL Server 自动生成的默认约束名称（如 `DF__table__col__12345678`）
+2. **智能删除**：该转换器支持通过列名删除默认约束，语法为：`ALTER TABLE ... DROP DEFAULT FOR [column]`
+3. **自动查询**：转换器会生成代码，从系统表（`sys.default_constraints`）中查询绑定到指定列的默认约束名，然后执行删除
+
+示例 - 智能删除默认约束：
+输入：
+```sql
+ALTER TABLE [dbo].[Orders] DROP DEFAULT FOR [Status];
+```
+输出：
+```sql
+DECLARE @dcname sysname;
+SELECT @dcname = dc.name
+FROM sys.default_constraints dc
+INNER JOIN sys.columns c ON c.object_id = dc.parent_object_id AND c.column_id = dc.parent_column_id
+WHERE dc.parent_object_id = OBJECT_ID(N'[dbo].[Orders]')
+  AND c.name = N'Status';
+
+IF @dcname IS NOT NULL
+BEGIN
+    EXEC('ALTER TABLE [dbo].[Orders] DROP CONSTRAINT [' + @dcname + ']');
+END
+```
+
+如果你明确知道默认约束的名称（如 `DF_Orders_Status`），也可以直接使用 `DROP CONSTRAINT` 语法，但该语句会被识别为默认约束并交由智能处理器处理。
+
 ### 5. DROP INDEX（默认丢弃）
 输入：
 ```sql
