@@ -16,6 +16,12 @@ namespace SqlProcessorCommand
         public class Options
         {
             /// <summary>
+            /// 丢弃所有 DROP 语句（默认 false）。
+            /// 当设置为 true 时，所有 DROP 操作都会被替换为空。
+            /// 此选项优先级高于单独的 DiscardDropXxx 选项。
+            /// </summary>
+            public bool DiscardAllDrops { get; set; } = false;
+            /// <summary>
             /// 丢弃 DROP TABLE 语句（默认 true）。
             /// </summary>
             public bool DiscardDropTable { get; set; } = true;
@@ -105,7 +111,7 @@ namespace SqlProcessorCommand
             var p = new PipelineBuilder();
 
             // 注意顺序：先危险/结构性再元数据
-            if (opt.DiscardDropTable)
+            if (opt.DiscardAllDrops || opt.DiscardDropTable)
             {
                 p.Add(new DropTableToEmptyTransform());           // 丢弃 DROP TABLE
             }
@@ -114,7 +120,7 @@ namespace SqlProcessorCommand
                 p.Add(new DropTableTransform());                  // DROP TABLE 安全化/移除
             }
 
-            if (opt.DiscardDropColumn)
+            if (opt.DiscardAllDrops || opt.DiscardDropColumn)
             {
                 p.Add(new DropColumnToEmptyTransform());       // 丢弃 DROP COLUMN
             }
@@ -144,7 +150,7 @@ namespace SqlProcessorCommand
             // 索引/约束/杂项
             p.Add(new CreateIndexTransform());
             
-            if (opt.DiscardDropConstraint)
+            if (opt.DiscardAllDrops || opt.DiscardDropConstraint)
             {
                 p.Add(new DropConstraintToEmptyTransform());       // 丢弃 DROP CONSTRAINT
             }
@@ -155,7 +161,7 @@ namespace SqlProcessorCommand
             
             p.Add(new DropDefaultConstraintSmartTransform());
             
-            if (opt.DiscardDropIndex)
+            if (opt.DiscardAllDrops || opt.DiscardDropIndex)
             {
                 p.Add(new DropIndexToEmptyTransform());            // 丢弃 DROP INDEX
             }
@@ -166,26 +172,69 @@ namespace SqlProcessorCommand
 
             // 架构管理
             p.Add(new CreateSchemaTransform());
-            p.Add(new DropSchemaTransform());
+            if (opt.DiscardAllDrops)
+            {
+                p.Add(new DropSchemaToEmptyTransform());           // 丢弃 DROP SCHEMA
+            }
+            else
+            {
+                p.Add(new DropSchemaTransform());                  // DROP SCHEMA 安全化
+            }
 
             // 用户定义类型
             p.Add(new CreateUserDefinedTypeTransform());
-            p.Add(new DropUserDefinedTypeTransform());
+            if (opt.DiscardAllDrops)
+            {
+                p.Add(new DropUserDefinedTypeToEmptyTransform());  // 丢弃 DROP TYPE
+            }
+            else
+            {
+                p.Add(new DropUserDefinedTypeTransform());         // DROP TYPE 安全化
+            }
 
             // 同义词
             p.Add(new CreateSynonymTransform());
-            p.Add(new DropSynonymTransform());
+            if (opt.DiscardAllDrops)
+            {
+                p.Add(new DropSynonymToEmptyTransform());          // 丢弃 DROP SYNONYM
+            }
+            else
+            {
+                p.Add(new DropSynonymTransform());                 // DROP SYNONYM 安全化
+            }
 
             // 序列（SQL 2012+）
             p.Add(new CreateSequenceTransform());
             p.Add(new AlterSequenceTransform());
-            p.Add(new DropSequenceTransform());
+            if (opt.DiscardAllDrops)
+            {
+                p.Add(new DropSequenceToEmptyTransform());         // 丢弃 DROP SEQUENCE
+            }
+            else
+            {
+                p.Add(new DropSequenceTransform());                // DROP SEQUENCE 安全化
+            }
 
             // 安全对象
             p.Add(new CreateRoleTransform());
-            p.Add(new DropRoleTransform());
+            if (opt.DiscardAllDrops)
+            {
+                p.Add(new DropRoleToEmptyTransform());             // 丢弃 DROP ROLE
+            }
+            else
+            {
+                p.Add(new DropRoleTransform());                    // DROP ROLE 安全化
+            }
+            
             p.Add(new CreateUserTransform());
-            p.Add(new DropUserTransform());
+            if (opt.DiscardAllDrops)
+            {
+                p.Add(new DropUserToEmptyTransform());             // 丢弃 DROP USER
+            }
+            else
+            {
+                p.Add(new DropUserTransform());                    // DROP USER 安全化
+            }
 
             p.Add(new AlterColumnTransform());                 // 最后处理 ALTER COLUMN 类
 
