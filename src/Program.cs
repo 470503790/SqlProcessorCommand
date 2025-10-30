@@ -21,6 +21,8 @@ namespace SqlProcessorCommand
                 string tag = GetOption(args, "--name") ?? GetOption(args, "-n");
                 string encName = GetOption(args, "--encoding");
 
+                bool discardAllDrops = HasFlag(args, "--discard-all-drops");
+
                 bool? discardDropTable = null; // null=默认(true); true=丢弃; false=保留
                 if (HasFlag(args, "--discard-drop-table")) discardDropTable = true;
                 if (HasFlag(args, "--keep-drop-table"))    discardDropTable = false;
@@ -66,6 +68,7 @@ namespace SqlProcessorCommand
 
                 var options = new SqlIdempotentProcessor.Options
                 {
+                    DiscardAllDrops = discardAllDrops,
                     DiscardDropTable = discardDropTable ?? true,
                     DiscardDropColumn = discardDropColumn ?? true,
                     DiscardDropConstraint = discardDropConstraint ?? true,
@@ -118,6 +121,7 @@ namespace SqlProcessorCommand
         {
             Console.WriteLine("用法:");
             Console.WriteLine("  SqlProcessorCommand --input <input.sql> [--output <out.sql>] [--name <tag>] [--encoding <enc>]");
+            Console.WriteLine("                       [--discard-all-drops]");
             Console.WriteLine("                       [--discard-drop-table | --keep-drop-table]");
             Console.WriteLine("                       [--discard-drop-column | --keep-drop-column]");
             Console.WriteLine("                       [--discard-drop-constraint | --keep-drop-constraint]");
@@ -128,6 +132,7 @@ namespace SqlProcessorCommand
             Console.WriteLine("  -o, --output           输出 SQL 文件路径（可选；默认: <输入名>.<name|idempotent>.sql）");
             Console.WriteLine("  -n, --name             命名（用于输出文件名后缀；可选）");
             Console.WriteLine("      --encoding         文本编码，默认 utf-8（示例：gb2312, gbk, utf-16）");
+            Console.WriteLine("      --discard-all-drops        丢弃所有 DROP 语句（优先级最高，覆盖所有其他 DROP 选项）");
             Console.WriteLine("      --discard-drop-table       丢弃所有 DROP TABLE 语句（默认开启）");
             Console.WriteLine("      --keep-drop-table          保留 DROP TABLE 语句（覆盖默认）");
             Console.WriteLine("      --discard-drop-column      丢弃所有 ALTER TABLE ... DROP COLUMN 语句（默认开启）");
