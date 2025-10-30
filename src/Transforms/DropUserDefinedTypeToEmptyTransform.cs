@@ -9,7 +9,7 @@ namespace SqlProcessorCommand
     internal sealed class DropUserDefinedTypeToEmptyTransform : ISqlBlockTransform
     {
         private static readonly Regex R =
-            new Regex(@"^\s*DROP\s+TYPE\s+(?:(?:\[(?<schema>[^\]]+)\])\.)?\[?(?<type>[^\]]+)\]?",
+            new Regex(@"^\s*DROP\s+TYPE\s+(?:\[(?<schema>[^\]]+)\]\.)?\[?(?<type>[^\]]+)\]?",
                       RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant);
         
         public bool CanHandle(string block) => R.IsMatch(block);

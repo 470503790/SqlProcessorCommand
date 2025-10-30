@@ -9,7 +9,7 @@ namespace SqlProcessorCommand
     internal sealed class DropSequenceToEmptyTransform : ISqlBlockTransform
     {
         private static readonly Regex R =
-            new Regex(@"^\s*DROP\s+SEQUENCE\s+(?:(?:\[(?<schema>[^\]]+)\])\.)?\[?(?<sequence>[^\]]+)\]?",
+            new Regex(@"^\s*DROP\s+SEQUENCE\s+(?:\[(?<schema>[^\]]+)\]\.)?\[?(?<sequence>[^\]]+)\]?",
                       RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant);
         
         public bool CanHandle(string block) => R.IsMatch(block);
