@@ -137,5 +137,48 @@ namespace SqlProcessorTests
             // Assert
             Assert.IsFalse(result, "Default constraint check should be case-insensitive");
         }
+
+        [TestMethod]
+        public void CanHandle_ConstraintWithComplexName_ReturnsTrue()
+        {
+            // Arrange - Real world example from issue with complex auto-generated constraint name
+            var sql = "ALTER TABLE [dbo].[ftweb_order] DROP CONSTRAINT [DF__ftweb_ord__pay_t__6017EE93]";
+
+            // Act
+            var result = _transform.CanHandle(sql);
+
+            // Assert
+            // This is a default constraint (starts with DF__), so it should be excluded
+            Assert.IsFalse(result, "Constraint DF__ftweb_ord__pay_t__6017EE93 is a default constraint and should be excluded");
+        }
+
+        [TestMethod]
+        public void CanHandle_NonDefaultConstraintWithComplexName_ReturnsTrue()
+        {
+            // Arrange - Similar pattern but not a default constraint
+            var sql = "ALTER TABLE [dbo].[ftweb_order] DROP CONSTRAINT [FK__ftweb_ord__pay_t__6017EE93]";
+
+            // Act
+            var result = _transform.CanHandle(sql);
+
+            // Assert
+            Assert.IsTrue(result, "FK constraint with complex name should be handled");
+        }
+
+        [TestMethod]
+        public void Transform_NonDefaultConstraintWithComplexName_WrapsWithExistenceCheck()
+        {
+            // Arrange
+            var sql = "ALTER TABLE [dbo].[ftweb_order] DROP CONSTRAINT [FK__ftweb_ord__pay_t__6017EE93]";
+
+            // Act
+            var result = _transform.Transform(sql);
+
+            // Assert
+            Assert.IsTrue(result.Contains("IF EXISTS (SELECT 1 FROM sys.objects WHERE name = N'FK__ftweb_ord__pay_t__6017EE93' AND parent_object_id = OBJECT_ID(N'[dbo].[ftweb_order]'))"));
+            Assert.IsTrue(result.Contains("BEGIN"));
+            Assert.IsTrue(result.Contains(sql));
+            Assert.IsTrue(result.Contains("END"));
+        }
     }
 }

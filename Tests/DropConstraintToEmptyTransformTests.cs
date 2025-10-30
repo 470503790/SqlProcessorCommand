@@ -137,5 +137,45 @@ namespace SqlProcessorTests
             // Assert
             Assert.IsFalse(result, "Default constraint check should be case-insensitive");
         }
+
+        [TestMethod]
+        public void CanHandle_ConstraintWithComplexName_ReturnsFalse()
+        {
+            // Arrange - Real world example from issue with complex auto-generated constraint name
+            string sql = "ALTER TABLE [dbo].[ftweb_order] DROP CONSTRAINT [DF__ftweb_ord__pay_t__6017EE93]";
+            
+            // Act
+            bool result = _transform.CanHandle(sql);
+            
+            // Assert
+            // This is a default constraint (starts with DF__), so it should be excluded
+            Assert.IsFalse(result, "Constraint DF__ftweb_ord__pay_t__6017EE93 is a default constraint and should be excluded");
+        }
+
+        [TestMethod]
+        public void CanHandle_NonDefaultConstraintWithComplexName_ReturnsTrue()
+        {
+            // Arrange - Similar pattern but not a default constraint
+            string sql = "ALTER TABLE [dbo].[ftweb_order] DROP CONSTRAINT [FK__ftweb_ord__pay_t__6017EE93]";
+            
+            // Act
+            bool result = _transform.CanHandle(sql);
+            
+            // Assert
+            Assert.IsTrue(result, "FK constraint with complex name should be handled");
+        }
+
+        [TestMethod]
+        public void Transform_NonDefaultConstraintWithComplexName_ReturnsEmptyString()
+        {
+            // Arrange
+            string sql = "ALTER TABLE [dbo].[ftweb_order] DROP CONSTRAINT [FK__ftweb_ord__pay_t__6017EE93]";
+            
+            // Act
+            string result = _transform.Transform(sql);
+            
+            // Assert
+            Assert.AreEqual(string.Empty, result);
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace SqlProcessorCommand
     internal sealed class CreateOrAlterProcedureTransform : ISqlBlockTransform
     {
         private static readonly Regex R =
-            new Regex(@"^\s*CREATE\s+OR\s+ALTER\s+PROCEDURE\s+(?:(?:\[(?<schema>[^\]]+)\])\.)?(?:\[(?<name>[^\]]+)\]|(?<name2>\w+))\b",
+            new Regex(@"^\s*CREATE\s+OR\s+ALTER\s+PROCEDURE\s+(?:(?:\[(?<schema>[^\]]+)\])\.)?(?:\[(?<name>[^\]]+)\]|(?<name2>\w+))(?=\s|$)",
                       RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant);
         public bool CanHandle(string block) => R.IsMatch(block);
         public string Transform(string block)

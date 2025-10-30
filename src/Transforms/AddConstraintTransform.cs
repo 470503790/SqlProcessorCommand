@@ -10,7 +10,7 @@ namespace SqlProcessorCommand
     internal sealed class AddConstraintTransform : ISqlBlockTransform
     {
         private static readonly Regex R =
-            new Regex(@"^\s*ALTER\s+TABLE\s+(?:(?:\[(?<schema>[^\]]+)\])\.)?(?:\[(?<table>[^\]]+)\]|(?<table2>\w+))\s+ADD\s+CONSTRAINT\s+(?:\[(?<cname>[^\]]+)\]|(?<cname2>\w+))\b(?<rest>[\s\S]*)$",
+            new Regex(@"^\s*ALTER\s+TABLE\s+(?:(?:\[(?<schema>[^\]]+)\])\.)?(?:\[(?<table>[^\]]+)\]|(?<table2>\w+))\s+ADD\s+CONSTRAINT\s+(?:\[(?<cname>[^\]]+)\]|(?<cname2>\w+))(?=\s|$)(?<rest>[\s\S]*)$",
                       RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant);
         public bool CanHandle(string block) => R.IsMatch(block);
         public string Transform(string block)
