@@ -128,14 +128,14 @@ namespace SqlProcessorTests
         [TestMethod]
         public void CanHandle_DefaultConstraintWithBracketedSchema_ReturnsTrue()
         {
-            // Arrange - DF_ constraint with properly bracketed schema
-            string sql = "ALTER TABLE [dbo].TestTable DROP CONSTRAINT DF_TestTable_Status";
+            // Arrange - DF_ constraint with properly bracketed schema and table
+            string sql = "ALTER TABLE [dbo].[TestTable] DROP CONSTRAINT [DF_TestTable_Status]";
             
             // Act
             bool result = _transform.CanHandle(sql);
             
             // Assert
-            Assert.IsTrue(result, "DF_ constraints with bracketed schema should be handled");
+            Assert.IsTrue(result, "DF_ constraints with bracketed names should be handled");
         }
 
         [TestMethod]
